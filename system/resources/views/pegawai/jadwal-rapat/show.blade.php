@@ -9,9 +9,9 @@
 
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-success float-right mr-3" data-toggle="modal" data-target="#exampleModal">
+          <!--   <button type="button" class="btn btn-success float-right mr-3" data-toggle="modal" data-target="#exampleModal">
                 <i class="mdi mdi-qrcode-scan"></i> QR Absensi
-            </button>
+            </button> -->
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -34,6 +34,7 @@
             </div>
         </div>
     </div>
+    
 </h3>
 </div>
 </div>
@@ -48,7 +49,9 @@
                 <p>{{$detail->rapat_deskripsi}}</p>
 
                 <b>Jumlah Undangan : {{$countPeserta}} Orang</b> <br>
-                  <a href="{{url($detail->file)}}" class="btn btn-dark btn-sm mt-3" download><i class="fa fa-download" ></i> Download Paparan</a> <br>
+                  <a href="{{url($detail->file ?? '')}}" class="btn btn-dark btn-sm mt-3" download><i class="fa fa-download" ></i> Download Paparan</a> <br>
+                
+                
 
             </div>
         </div>
@@ -65,11 +68,7 @@
             </div>
 
             <div class="col-md-12">
-                @if ($notulensi)
-                {!! nl2br($notulensi->notulensi_isi) !!}
-                @else
-                <p>Notulensi tidak ditemukan.</p>
-                @endif
+                {!! nl2br($notulensi->notulensi_isi ?? 'Notulensi belum dibuat') !!}
             </div>
 
 
@@ -81,7 +80,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <center>
-                        <h3>FILE/DOKUMENTASI KEGIATRAN</h3>
+                        <h3>FILE/DOKUMENTASI KEGIATAN</h3>
                     </center>
                 </div>
 
@@ -125,7 +124,7 @@
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">From Tambah Undangan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
@@ -157,23 +156,37 @@
             <th>No</th>
             <th>Nama Peserta</th>
             <th>Status Kehadiran</th>
+            <th>Aksi</th>
         </tr>
     </thead>
 
     <tbody>
-        @foreach($list_undangan as $item)
-        <tr>
-            <td>{{$loop->iteration}}</td>
-            <td>{{ucwords($item->pegawai_nama)}}</td>
-            <td>
-                @if($item->status_kehadiran == 0)
-                <badge class="badge badge-danger">Belum Absensi</badge>      
-                @else
-                <badge class="badge badge-info">Absensi</badge>   
-                @endif
-            </td>
-        </tr>
-        @endforeach
+       @foreach($list_undangan as $item)
+<tr>
+    <td>{{$loop->iteration}}</td>
+    <td>{{ucwords($item->pegawai_nama)}}</td>
+    <td>
+        @if($item->status_kehadiran == 0)
+        <badge class="badge badge-danger">Belum Absensi</badge>      
+        @elseif($item->status_kehadiran == 1)
+        <badge class="badge badge-success">Hadir</badge>   
+        @elseif($item->status_kehadiran == 2)
+        <badge class="badge badge-danger">Tidak Hadir</badge>   
+        @endif
+    </td>
+    <td>
+        <form id="auto-submit-form-{{$item->peserta_id}}" action="{{url('x/jadwal-rapat',$detail->jadwal_id)}}/{{$item->peserta_id}}" method="post">
+            @csrf 
+            @method("PUT")
+            <select name="status_kehadiran" id="status-kehadiran-{{$item->peserta_id}}" class="form-control">
+                <option value="" hidden>Status Kehadiran</option>
+                <option value="1">Hadir</option>
+                <option value="2">Tidak Hadir</option>
+            </select>
+        </form>
+    </td>
+</tr>
+@endforeach
     </tbody>
 </table>
 </div>
@@ -182,6 +195,25 @@
 </div>
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Dapatkan semua elemen dropdown dengan ID yang diawali dengan 'status-kehadiran-'
+        var dropdowns = document.querySelectorAll('select[id^="status-kehadiran-"]');
+        
+        dropdowns.forEach(function(dropdown) {
+            // Ambil ID formulir yang sesuai dengan dropdown
+            var formId = 'auto-submit-form-' + dropdown.id.split('-').pop();
+            var form = document.getElementById(formId);
+
+            // Tambahkan event listener untuk perubahan nilai dropdown
+            dropdown.addEventListener('change', function() {
+                form.submit();
+            });
+        });
+    });
+</script>
+
 <script type="text/javascript">
 
     function loadpage(){

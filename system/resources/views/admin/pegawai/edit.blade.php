@@ -62,7 +62,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <span>Bidang</span>
-                    <select name="pegawai_level" class="form-control" id="" required>
+                    <select name="pegawai_bidang" class="form-control" id="" required>
                         <option value="" hidden>-- Pilih Bidang --</option>
                         @foreach($list_bidang as $bidang)
                         <option value="{{$bidang->bidang_id}}" @if($bidang->bidang_id == $detail->pegawai_bidang) selected @endif>{{ucwords($bidang->bidang_nama)}}</option>

@@ -16,7 +16,6 @@ class PegawaiHistoryController extends Controller
         ->where('status_notulensi',1)
         ->distinct()
         ->get();
-        $data['jumlahUndangan']  = 100;
         return view('pegawai.history.index',$data);
     }
 

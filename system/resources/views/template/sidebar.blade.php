@@ -9,30 +9,30 @@
             </a>
         </li>
 
-        <li class="nav-item">
+      <!--   <li class="nav-item">
             <a class="nav-link" href="{{ url('x/absensi') }}">
                 <i class="mdi mdi-qrcode-scan menu-icon"></i>
                 <span class="menu-title">Absensi</span>
             </a>
         </li>
+    -->
+    @if(Auth::guard('pegawai')->user()->pegawai_level == 2)
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url('x/jadwal-rapat/create') }}">
+            <i class="mdi mdi-forum menu-icon"></i>
+            <span class="menu-title">Buat Jadwal Rapat</span>
+        </a>
+    </li>
+    @endif
 
-        @if(Auth::guard('pegawai')->user()->pegawai_level == 2)
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('x/jadwal-rapat/create') }}">
-                <i class="mdi mdi-forum menu-icon"></i>
-                <span class="menu-title">Buat Jadwal Rapat</span>
-            </a>
-        </li>
-        @endif
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url('x/history-rapat') }}">
+            <i class="mdi mdi-forum menu-icon"></i>
+            <span class="menu-title">History Rapat</span>
+        </a>
+    </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('x/history-rapat') }}">
-                <i class="mdi mdi-forum menu-icon"></i>
-                <span class="menu-title">History Rapat</span>
-            </a>
-        </li>
-
-    </ul>
+</ul>
 </nav>
 
 
@@ -50,7 +50,7 @@
       <li class="nav-item">
           <a class="nav-link" href="{{url('admin/undangan')}}">
               <i class="mdi mdi-file-document-box menu-icon"></i>
-              <span class="menu-title">List Undangan</span>
+              <span class="menu-title">Agenda Rapat Pegawai</span>
           </a>
       </li>
 

@@ -111,7 +111,7 @@ class PegawaiRapatController extends Controller
         ];
         Mail::to($pegawai_emails)->send(new SendMail($data));
         $url = 'x/jadwal-rapat/'.$jadwal->jadwal_id.'/detail';
-        return redirect($url)->with('success','Undagngan berhasil dikirim ke email');
+        return redirect($url)->with('success','Undangan berhasil dikirim ke email');
     }
 
     function show(Jadwal $jadwal){
@@ -163,14 +163,18 @@ class PegawaiRapatController extends Controller
     }
 
     function storeNotulensi(Request $request, Jadwal $jadwal){
+
+      
+
         Peserta::where('peserta_jadwal_id',$jadwal->jadwal_id)->update([
             'status_notulensi' => 1
         ]);
-
+        $jadwal->rapat_status = 1;
         $note = new Notulensi;
         $note->jadwal_id = $jadwal->jadwal_id;
         $note->notulensi_isi = request('notulensi_isi');
         $note->save();
+        $jadwal->save();
 
         if ($request->hasFile('file')) {
             foreach ($request->file('file') as $key => $file) {
@@ -185,7 +189,7 @@ class PegawaiRapatController extends Controller
                 $bukti->save();
             }
         }
-         $url = 'x/jadwal-rapat/'.$jadwal->jadwal_id.'/detail';
+        $url = 'x/jadwal-rapat/'.$jadwal->jadwal_id.'/detail';
         return redirect($url)->with('success','Berhasil buat notulensi');
 
 
@@ -195,7 +199,7 @@ class PegawaiRapatController extends Controller
         Notulensi::where('jadwal_id',$jadwal->jadwal_id)->update([
             'notulensi_isi' => request('notulensi_isi')
         ]);
-         if ($request->hasFile('file')) {
+        if ($request->hasFile('file')) {
             foreach ($request->file('file') as $key => $file) {
                 $rand = Str::random(5) . '-' . Str::random(5);
                 $nama_file = 'dokumentasi' . '-' . $rand . '-' . time() . '.' . $file->getClientOriginalExtension();
@@ -208,7 +212,7 @@ class PegawaiRapatController extends Controller
                 $bukti->save();
             }
         }
-         $url = 'x/jadwal-rapat/'.$jadwal->jadwal_id.'/detail';
+        $url = 'x/jadwal-rapat/'.$jadwal->jadwal_id.'/detail';
         return redirect($url)->with('success','Berhasil buat notulensi');
     }
 
@@ -221,13 +225,13 @@ class PegawaiRapatController extends Controller
         $peserta = new Peserta;
         $peserta->peserta_email = request('peserta_email');
         $peserta->pegawai_nama = request('pegawai_nama');
-        $peserta->kode_rapat = $jadwal->kode_rapat;
+        $peserta->kode_rapat = $jadwal->rapat_kode;
         $peserta->peserta_jadwal_id = $jadwal->jadwal_id;
         $peserta->save();
 
         $email = request('peserta_email');
 
-          $data = [
+        $data = [
             'judulRapat' => $jadwal->rapat_judul,
             'mulai' => $jadwal->rapat_waktu_mulai,
             'selesai' => $jadwal->rapat_waktu_selesai,
@@ -238,5 +242,11 @@ class PegawaiRapatController extends Controller
         Mail::to($email)->send(new SendMail($data)); 
 
         return back()->with('success','Berhasil diundang');
+    }
+
+    function absensi(Jadwal $jadwal,Peserta $peserta){
+        $peserta->status_kehadiran = request('status_kehadiran');
+        $peserta->save();
+        return back();
     }
 }

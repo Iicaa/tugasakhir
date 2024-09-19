@@ -16,10 +16,26 @@ class AdminController extends Controller
         $startDate = Carbon::now()->startOfMonth();
         $endDate = Carbon::now()->endOfMonth();
 
+        $data['mendatang'] = Jadwal::where('flag_erase',1)
+        ->where('rapat_status',0)
+        ->count();
+
+        $data['total'] = Jadwal::where('flag_erase',1)
+        ->count();
+
+        $data['bulan'] = Jadwal::where('flag_erase', 1)
+        ->where('rapat_status',1)
+        ->whereMonth('created_at', Carbon::now()->month)
+        ->whereYear('created_at', Carbon::now()->year)
+        ->count();
+
         $data['auth'] = $peserta = Auth::guard('pegawai')->user();
         $data['list_rapat'] = Peserta::where('status_notulensi',0)
         ->get();
+
+
         $jumlahUndangan = 0;
+        
         $date = date('Y-m-d');
         $undangan = Jadwal::where('flag_erase', 1)
                     ->where('rapat_tanggal', '>=', $date) // Ubah menjadi '>=' untuk yang belum lewat
@@ -29,16 +45,7 @@ class AdminController extends Controller
                     }
                     $data['jumlahUndangan'] = $jumlahUndangan;
 
-                    $data['mendatang'] = Peserta::where('status_notulensi',0)
-                    ->count();
 
-                    $data['total'] = Peserta::where('status_notulensi',1)
-                    ->count();
-
-                    $data['bulan'] = Peserta::where('status_notulensi', 1)
-                        ->whereMonth('created_at', Carbon::now()->month)
-                        ->whereYear('created_at', Carbon::now()->year)
-                        ->count();
-        return view('admin.beranda',$data);
-    }
-}
+                    return view('admin.beranda',$data);
+                }
+            }

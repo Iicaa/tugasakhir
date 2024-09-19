@@ -13,13 +13,13 @@
 
 <div class="mt-3">
 	<div class="row">
-		@foreach($list_peserta as $item)
+		@foreach($list_peserta->sortByDesc('updated_at') as $item)
 		<div class="col-md-6">
 			<div class="jumbotron shadow">
 				<h1 class="display-4">#{{$item->rapat->rapat_kode}} || {{ucwords($item->rapat->rapat_judul)}}</h1>
 				<p class="lead">{{$item->rapat->rapat_deskripsi}}</p>
 				<hr class="my-4">
-				<p>Jumlah Undangan : {{$jumlahUndangan}}  <br>
+				<p>
 					<i class="mdi mdi-calendar"></i> Tanggal : {{$item->rapat->rapat_tanggal}} || Jam {{$item->rapat->rapat_waktu_mulai}} s/d {{$item->rapat->rapat_waktu_selesai}}
 				
 				</p>

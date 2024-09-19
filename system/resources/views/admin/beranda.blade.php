@@ -58,7 +58,7 @@
           <i class="mdi mdi-calendar"></i> Tanggal : {{$item->rapat->rapat_tanggal}} || Jam {{$item->rapat_waktu_mulai}} s/d {{$item->rapat_waktu_selesai}}
 
         </p> 
-        <a class="btn btn-primary btn-lg" href="{{url('x/jadwal-rapat',$item->rapat->jadwal_id)}}/detail" role="button"><b>Lihat Detail Rapat</b></a> 
+        <a class="btn btn-primary btn-lg" href="{{url('admin/jadwal-rapat',$item->rapat->jadwal_id)}}/detail" role="button"><b>Lihat Detail Rapat</b></a> 
       
 
       </div>

@@ -35,6 +35,7 @@ class AdminPegawaiController extends Controller
         $pegawai->password = bcrypt(request('pegawai_nip'));
         $pegawai->pegawai_tingkat = request('pegawai_tingkat');
         $pegawai->pegawai_status = request('pegawai_status');
+        $pegawai->pegawai_bidang = request('pegawai_bidang');
         $pegawai->save();
         return redirect('admin/data-pegawai')->with('success','Data pegawai berhasil ditambah');
     }
@@ -74,6 +75,7 @@ class AdminPegawaiController extends Controller
         $pegawai->password = bcrypt(request('pegawai_nip'));
         $pegawai->pegawai_tingkat = request('pegawai_tingkat');
         $pegawai->pegawai_status = request('pegawai_status');
+        $pegawai->pegawai_bidang = request('pegawai_bidang');
         $pegawai->save();
         return redirect('admin/data-pegawai')->with('success','Data pegawai berhasil diupdate');
     }

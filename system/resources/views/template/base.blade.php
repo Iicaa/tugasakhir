@@ -32,28 +32,17 @@
         </div>  
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-        <ul class="navbar-nav mr-lg-4 w-100">
-          <li class="nav-item nav-search d-none d-lg-block w-100">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="search">
-                  <i class="mdi mdi-magnify"></i>
-                </span>
-              </div>
-              <input type="text" class="form-control" placeholder="Cari Kode Rapat" aria-label="search" aria-describedby="search">
-            </div>
-          </li>
-        </ul>
+       
         <ul class="navbar-nav navbar-nav-right">
-          <li class="nav-item dropdown mr-1">
+         <!--  <li class="nav-item dropdown mr-1">
             <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" href="{{url('x/absensi')}}">
               <i class="mdi mdi-qrcode-scan mx-0"></i>
               <span class="count"></span>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-              <img src="{{url('public')}}/assets/images/faces/face5.jpg" alt="profile"/>
+              <img src="{{ url('public') }}/assets/images/ktp.png" alt="profile"/>
               <span class="nav-profile-name">
                 @if(Auth::guard('pegawai')->user())
                 {{ucwords(Auth::guard('pegawai')->user()->pegawai_nama)}}
@@ -103,7 +92,7 @@
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © {{ date('Y') }} All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-sm-0 text-center"> Politeknik Negeri Ketapang | <img src="{{ url('public') }}/assets/images/logo.jpg" style="max-width: 25px" alt=""> <img src="{{ url('public') }}/assets/images/ktp.png" style="max-width: 20px" alt=""></span>
+            <span class="float-none float-sm-right d-block mt-sm-0 text-center"> DINAS PENDIDIKAN KABUPATEN KETAPANG | <img src="{{ url('public') }}/assets/images/" style="max-width: 25px" alt=""> <img src="{{ url('public') }}/assets/images/ktp.png" style="max-width: 20px" alt=""></span>
           </div>
         </footer>
         <!-- partial -->

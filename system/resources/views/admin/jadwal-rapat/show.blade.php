@@ -8,9 +8,9 @@
 
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-success float-right mr-3" data-toggle="modal" data-target="#exampleModal">
+          <!--   <button type="button" class="btn btn-success float-right mr-3" data-toggle="modal" data-target="#exampleModal">
                 <i class="mdi mdi-qrcode-scan"></i> QR Absensi
-            </button>
+            </button> -->
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

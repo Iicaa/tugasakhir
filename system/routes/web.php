@@ -106,6 +106,7 @@ Route::prefix('x')->middleware('auth:pegawai')->group(function () {
 
 	Route::controller(PegawaiRapatController::class)->group(function () {
 		Route::get('/jadwal-rapat', 'index');
+		Route::put('/jadwal-rapat/{jadwal}/{peserta}', 'absensi');
 		Route::get('/jadwal-rapat/create', 'create');
 		Route::get('/jadwal-rapat/{jadwal}/pilih-pegawai', 'pilihPegawai');
 		Route::post('/jadwal-rapat/{jadwal}/pilih-pegawai', 'kirimJadwal');
